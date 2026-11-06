@@ -13,7 +13,7 @@ dependencies = [
     "regex>=2024",
     "rich>=15",
     "safetensors>=0.4",
-    "scikit-learn>=1.5",
+    "scikit-learn>=1.8",
     "threadpoolctl>=3",
     "torch>=2.14",
 ]

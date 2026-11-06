@@ -23,7 +23,7 @@ L1_STRENGTHS = tuple(2.0 ** np.arange(-6, 3))  # scikit-learn's C: lower means s
 
 def fit_probe(Xtr, ytr, Xdv, ydv) -> tuple[float, Pipeline]:
     # Standardised features, then L1-regularised logistic regression with the strength picked on dev
-    probes = [make_pipeline(StandardScaler(), LogisticRegression(penalty='l1', C=c, solver='liblinear')).fit(Xtr, ytr)
+    probes = [make_pipeline(StandardScaler(), LogisticRegression(l1_ratio=1, C=c, solver='liblinear')).fit(Xtr, ytr)
               for c in L1_STRENGTHS]
     return max(((probe.score(Xdv, ydv), probe) for probe in probes), key=lambda pair: pair[0])
 
