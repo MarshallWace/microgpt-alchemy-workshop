@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="970" height="292" viewBox="0 0 970 292" font-family="Lato, Calibri, Segoe UI, Arial, sans-serif"><style>@media (prefers-color-scheme: dark) {.ink {fill: #ececec}.box {fill: #3e2a4a}.boxg {fill: #333333}.boxa {fill: #5c3a70}}</style><defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/></marker><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a152c2"/></marker></defs>
+<text x="10.0" y="22.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start" font-weight="700">Training</text>
+<rect x="10.0" y="36.0" width="136.0" height="56.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="78.0" y="62.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">texts</text><text x="78.0" y="81.0" font-size="12" fill="#8a8a8a" text-anchor="middle">SST, IMDB</text>
+<line x1="148.0" y1="64.0" x2="166.0" y2="64.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="170.0" y="36.0" width="136.0" height="56.0" rx="8" class="box" fill="#efe3f5"/><text x="238.0" y="62.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">tokenizer</text><text x="238.0" y="81.0" font-size="12" fill="#8a8a8a" text-anchor="middle">text → token ids</text>
+<text x="238.0" y="110.0" font-size="11" fill="#a152c2" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">tokenizer.md</text>
+<line x1="308.0" y1="64.0" x2="326.0" y2="64.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="330.0" y="36.0" width="136.0" height="56.0" rx="8" class="box" fill="#efe3f5"/><text x="398.0" y="62.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">windows</text><text x="398.0" y="81.0" font-size="12" fill="#8a8a8a" text-anchor="middle">packed, shuffled</text>
+<text x="398.0" y="110.0" font-size="11" fill="#a152c2" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">data.md</text>
+<line x1="468.0" y1="64.0" x2="486.0" y2="64.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="490.0" y="36.0" width="136.0" height="56.0" rx="8" class="box" fill="#efe3f5"/><text x="558.0" y="62.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">model</text><text x="558.0" y="81.0" font-size="12" fill="#8a8a8a" text-anchor="middle">predicts next tokens</text>
+<text x="558.0" y="110.0" font-size="11" fill="#a152c2" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">model.md</text>
+<line x1="628.0" y1="64.0" x2="646.0" y2="64.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="650.0" y="36.0" width="136.0" height="56.0" rx="8" class="box" fill="#efe3f5"/><text x="718.0" y="62.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">loss + optimizer</text><text x="718.0" y="81.0" font-size="12" fill="#8a8a8a" text-anchor="middle">nudge the weights</text>
+<text x="718.0" y="110.0" font-size="11" fill="#a152c2" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">training.md</text>
+<line x1="788.0" y1="64.0" x2="806.0" y2="64.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="810.0" y="36.0" width="136.0" height="56.0" rx="8" class="box" fill="#efe3f5"/><text x="878.0" y="62.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">checkpoint</text><text x="878.0" y="81.0" font-size="12" fill="#8a8a8a" text-anchor="middle">saved files</text>
+<text x="878.0" y="110.0" font-size="11" fill="#a152c2" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">checkpoints.md</text>
+<path d="M690 120 v14 H558 v-14" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<text x="638.0" y="150.0" font-size="12" fill="#8a8a8a" text-anchor="middle">repeat for every batch</text>
+<text x="10.0" y="186.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start" font-weight="700">Using a trained model</text>
+<line x1="878.0" y1="120.0" x2="878.0" y2="200.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="810.0" y="204.0" width="136.0" height="56.0" rx="8" class="box" fill="#efe3f5"/><text x="878.0" y="230.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">linear probe</text><text x="878.0" y="249.0" font-size="12" fill="#8a8a8a" text-anchor="middle">the sentiment score</text>
+<text x="878.0" y="278.0" font-size="11" fill="#a152c2" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">probe.md</text>
+<path d="M878 166 H718 V200" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="650.0" y="204.0" width="136.0" height="56.0" rx="8" class="box" fill="#efe3f5"/><text x="718.0" y="230.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">sampling</text><text x="718.0" y="249.0" font-size="12" fill="#8a8a8a" text-anchor="middle">continue a prompt</text>
+<text x="718.0" y="278.0" font-size="11" fill="#a152c2" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">sampling.md</text>
+</svg>

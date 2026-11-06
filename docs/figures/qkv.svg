@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="222" viewBox="0 0 620 222" font-family="Lato, Calibri, Segoe UI, Arial, sans-serif"><style>@media (prefers-color-scheme: dark) {.ink {fill: #ececec}.box {fill: #3e2a4a}.boxg {fill: #333333}.grid {stroke: #333333}}</style><defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/></marker><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a152c2"/></marker></defs>
+<rect x="20.0" y="82.0" width="150.0" height="52.0" rx="8" class="box" fill="#efe3f5"/><text x="95.0" y="114.3" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle">token vector</text>
+<path d="M170,108 C210,108 210,38 248,38" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="252.0" y="14.0" width="120.0" height="48.0" rx="8" class="box" fill="#efe3f5"/><text x="312.0" y="44.3" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle">query</text>
+<text x="392.0" y="44.0" font-size="16" fill="#8a8a8a" text-anchor="start">what am I looking for?</text>
+<path d="M170,108 C210,108 210,108 248,108" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="252.0" y="84.0" width="120.0" height="48.0" rx="8" class="box" fill="#efe3f5"/><text x="312.0" y="114.3" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle">key</text>
+<text x="392.0" y="114.0" font-size="16" fill="#8a8a8a" text-anchor="start">what do I contain?</text>
+<path d="M170,108 C210,108 210,178 248,178" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="252.0" y="154.0" width="120.0" height="48.0" rx="8" class="box" fill="#efe3f5"/><text x="312.0" y="184.3" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle">value</text>
+<text x="392.0" y="184.0" font-size="16" fill="#8a8a8a" text-anchor="start">what do I give?</text>
+</svg>

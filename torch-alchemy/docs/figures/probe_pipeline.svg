@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="890" height="118" viewBox="0 0 890 118" font-family="Lato, Calibri, Segoe UI, Arial, sans-serif"><style>@media (prefers-color-scheme: dark) {.ink {fill: #ececec}.box {fill: #3e2a4a}.boxg {fill: #333333}.boxa {fill: #5c3a70}}</style><defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/></marker><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a152c2"/></marker></defs>
+<rect x="10.0" y="30.0" width="150.0" height="56.0" rx="8" class="box" fill="#efe3f5"/><text x="85.0" y="56.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">&quot;a gripping film&quot;</text><text x="85.0" y="75.0" font-size="12" fill="#8a8a8a" text-anchor="middle">an SST sentence</text>
+<line x1="162.0" y1="58.0" x2="190.0" y2="58.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="194.0" y="30.0" width="170.0" height="56.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="279.0" y="56.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">frozen model</text><text x="279.0" y="75.0" font-size="12" fill="#8a8a8a" text-anchor="middle">trained only on next tokens</text>
+<line x1="366.0" y1="58.0" x2="394.0" y2="58.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="398.0" y="30.0" width="130.0" height="56.0" rx="8" class="box" fill="#efe3f5"/>
+<rect x="409.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#a961c7"/>
+<rect x="418.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#e3cced"/>
+<rect x="427.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#c28fd7"/>
+<rect x="436.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#ba80d2"/>
+<rect x="445.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#ebdbf2"/>
+<rect x="454.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#ca9edd"/>
+<rect x="463.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#dbbde8"/>
+<rect x="472.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#b270cd"/>
+<rect x="481.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#d3ade2"/>
+<rect x="490.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#a152c2"/>
+<rect x="499.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#e3cced"/>
+<rect x="508.0" y="47.0" width="7.0" height="22.0" rx="2" fill="#c28fd7"/>
+<text x="463.0" y="106.0" font-size="13" fill="#8a8a8a" text-anchor="middle">features</text>
+<line x1="530.0" y1="58.0" x2="558.0" y2="58.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="562.0" y="30.0" width="180.0" height="56.0" rx="8" class="box" fill="#efe3f5"/><text x="652.0" y="56.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">logistic regression</text><text x="652.0" y="75.0" font-size="12" fill="#8a8a8a" text-anchor="middle">the only part that learns</text>
+<line x1="744.0" y1="58.0" x2="772.0" y2="58.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<text x="780.0" y="54.0" font-size="16" fill="#a152c2" text-anchor="start" font-weight="700">positive</text>
+<text x="780.0" y="76.0" font-size="16" fill="#a152c2" text-anchor="start" font-weight="700">or negative?</text>
+</svg>

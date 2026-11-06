@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="496" viewBox="0 0 900 496" font-family="Lato, Calibri, Segoe UI, Arial, sans-serif"><style>@media (prefers-color-scheme: dark) {.ink {fill: #ececec}.box {fill: #3e2a4a}.boxg {fill: #333333}.boxa {fill: #5c3a70}}</style><defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/></marker><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a152c2"/></marker></defs>
+<text x="20.0" y="42.0" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">1</text>
+<text x="40.0" y="42.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start">token ids</text>
+<text x="40.0" y="59.0" font-size="12" fill="#8a8a8a" text-anchor="start">from the tokenizer</text>
+<rect x="288.0" y="26.0" width="62.0" height="30.0" rx="8" class="box" fill="#efe3f5"/><text x="319.0" y="45.5" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">&lt;bos&gt;</text>
+<rect x="354.0" y="26.0" width="62.0" height="30.0" rx="8" class="box" fill="#efe3f5"/><text x="385.0" y="45.5" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">the</text>
+<rect x="420.0" y="26.0" width="62.0" height="30.0" rx="8" class="box" fill="#efe3f5"/><text x="451.0" y="45.5" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">film</text>
+<rect x="486.0" y="26.0" width="62.0" height="30.0" rx="8" class="box" fill="#efe3f5"/><text x="517.0" y="45.5" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">was</text>
+<line x1="420.0" y1="58.0" x2="420.0" y2="84.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<text x="20.0" y="106.0" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">2</text>
+<text x="40.0" y="106.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start">embed_tokens</text>
+<text x="40.0" y="123.0" font-size="12" fill="#8a8a8a" text-anchor="start">a vector of hidden_dim numbers per token</text>
+<rect x="288.0" y="88.0" width="264.0" height="34.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="420.0" y="109.9" font-size="14" class="ink" fill="#1a1a1a" text-anchor="middle">embed_tokens</text>
+<line x1="420.0" y1="124.0" x2="420.0" y2="150.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<text x="20.0" y="180.0" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">3</text>
+<text x="40.0" y="180.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start">decoder layer</text>
+<text x="40.0" y="197.0" font-size="12" fill="#8a8a8a" text-anchor="start">repeated num_layers times</text>
+<rect x="270.0" y="150.0" width="550.0" height="200.0" rx="8" fill="none" stroke="#8a8a8a" stroke-width="2"/>
+<text x="810.0" y="168.0" font-size="13" fill="#8a8a8a" text-anchor="end">× num_layers</text>
+<path d="M420 150 V350" stroke="#8a8a8a" stroke-width="2"/>
+<line x1="420.0" y1="186.0" x2="468.0" y2="186.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="470.0" y="168.0" width="310.0" height="52.0" rx="8" class="box" fill="#efe3f5"/><text x="625.0" y="192.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="middle">RMSNorm → attention</text><text x="625.0" y="211.0" font-size="12" fill="#8a8a8a" text-anchor="middle">each token looks at earlier tokens (RoPE, QK-norm)</text>
+<path d="M610 220 V236 H433" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<circle cx="420" cy="236" r="11" class="box" fill="#efe3f5" stroke="#8a8a8a" stroke-width="2"/>
+<text x="420.0" y="241.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle" font-weight="700">+</text>
+<line x1="420.0" y1="286.0" x2="468.0" y2="286.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="470.0" y="268.0" width="310.0" height="52.0" rx="8" class="box" fill="#efe3f5"/><text x="625.0" y="292.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="middle">RMSNorm → MLP</text><text x="625.0" y="311.0" font-size="12" fill="#8a8a8a" text-anchor="middle">each token alone (SwiGLU)</text>
+<path d="M610 320 V336 H433" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<circle cx="420" cy="336" r="11" class="box" fill="#efe3f5" stroke="#8a8a8a" stroke-width="2"/>
+<text x="420.0" y="341.0" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle" font-weight="700">+</text>
+<text x="404.0" y="250.0" font-size="12" fill="#8a8a8a" text-anchor="end">residual stream</text>
+<text x="404.0" y="266.0" font-size="12" fill="#8a8a8a" text-anchor="end">(the + keeps it)</text>
+<line x1="420.0" y1="350.0" x2="420.0" y2="376.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<text x="20.0" y="398.0" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">4</text>
+<text x="40.0" y="398.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start">final norm</text>
+<rect x="288.0" y="380.0" width="264.0" height="34.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="420.0" y="401.9" font-size="14" class="ink" fill="#1a1a1a" text-anchor="middle">norm (RMSNorm)</text>
+<line x1="420.0" y1="416.0" x2="420.0" y2="442.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<text x="20.0" y="464.0" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">5</text>
+<text x="40.0" y="464.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start">lm_head</text>
+<text x="40.0" y="481.0" font-size="12" fill="#8a8a8a" text-anchor="start">a score per token: what comes next?</text>
+<rect x="288.0" y="446.0" width="264.0" height="34.0" rx="8" class="box" fill="#efe3f5"/><text x="420.0" y="467.9" font-size="14" class="ink" fill="#1a1a1a" text-anchor="middle">lm_head</text>
+<text x="570.0" y="468.0" font-size="12" fill="#8a8a8a" text-anchor="start">tied: the same matrix as embed_tokens</text>
+</svg>

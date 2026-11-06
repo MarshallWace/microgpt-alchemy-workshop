@@ -1,0 +1,490 @@
+<!doctype html>
+<!-- The SAE page's layout. Filled in by experiments/sae/article.py (its data replaces DATA below); open the result,
+     runs/sae/index.html, or serve it with experiments/sae/serve.py to steer with your own prompts. -->
+<html lang="en">
+<meta charset="utf-8">
+<title>Sentiment Features in a Tiny Review Model</title>
+<style>
+  :root { --accent: #a152c2; --box: #efe3f5; --grey: #8a8a8a; --line: #e9e9e9; --ink: #1a1a1a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Lato, Calibri, 'Segoe UI', Arial, sans-serif; color: var(--ink); line-height: 1.6; }
+  header.top { background: #faf6fc; border-bottom: 1px solid var(--line); padding: 48px 20px 28px; }
+  .col { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  .wide { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+  h1 { font-size: 34px; line-height: 1.2; margin: 0 0 10px; }
+  h2 { font-size: 24px; margin: 48px 0 8px; border-top: 1px solid var(--line); padding-top: 28px; }
+  h3 { font-size: 19px; margin: 32px 0 6px; } h4 { font-size: 15px; margin: 18px 0 4px; color: #555; }
+  .subtitle { font-size: 18px; color: #555; margin: 0 0 18px; }
+  .byline { font-size: 13px; color: var(--grey); margin-top: 18px; }
+  .button { display: inline-block; background: var(--accent); color: #fff; padding: 7px 14px; border-radius: 6px;
+            text-decoration: none; margin-right: 8px; font-size: 14px; }
+  a { color: var(--accent); }
+  figure { margin: 18px 0 26px; } figcaption { font-size: 13px; color: #555; margin-top: 6px; }
+  table.setup { border-collapse: collapse; width: 100%; font-size: 14px; }
+  table.setup td, table.setup th { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left;
+                                   vertical-align: top; }
+  .ex { font-family: 'Roboto Mono', Consolas, monospace; font-size: 12.5px; white-space: pre-wrap; padding: 3px 0;
+        border-bottom: 1px solid #f4f4f4; } .ex .at { box-shadow: inset 0 -2px 0 var(--ink); }
+  .chip { font-family: 'Roboto Mono', Consolas, monospace; font-size: 12.5px; background: var(--box); padding: 1px 5px;
+          border-radius: 4px; margin: 0 4px 4px 0; display: inline-block; white-space: pre; }
+  code { font-family: 'Roboto Mono', Consolas, monospace; font-size: 13px; background: #f4f4f4; padding: 0 3px; }
+  pre { background: #f6f6f6; padding: 10px 12px; border-radius: 6px; white-space: pre-wrap; font-size: 12.5px; }
+  .samples td { font-size: 13px; padding: 5px 8px; vertical-align: top; border-bottom: 1px solid #f2f2f2; }
+  .samples th { font-size: 12px; color: var(--grey); text-align: left; padding: 4px 8px; font-weight: normal; }
+  .note { font-size: 13px; color: #555; background: #faf6fc; border-left: 3px solid var(--accent); padding: 8px 12px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin: 10px 0; font-size: 14px; }
+  select, input, textarea, button { font: inherit; font-size: 14px; padding: 5px 8px; border: 1px solid #ddd;
+                                    border-radius: 6px; }
+  button { background: var(--accent); color: #fff; border: none; cursor: pointer; }
+  .fn { counter-increment: fn; } sup { font-size: 11px; }
+  /* The feature browser */
+  .browser { display: flex; height: 82vh; border: 1px solid var(--line); border-radius: 8px; margin: 14px 0;
+             overflow: hidden; line-height: 1.4; }
+  .browser aside { width: 310px; border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+  .browser aside .head { padding: 10px; border-bottom: 1px solid var(--line); }
+  .browser aside input, .browser aside select { width: 100%; margin-top: 6px; }
+  #list { overflow-y: auto; flex: 1; }
+  .item { padding: 5px 10px; cursor: pointer; border-bottom: 1px solid #f4f4f4; font-size: 13.5px; display: flex;
+          gap: 8px; } .item:hover, .item.on { background: var(--box); }
+  .item .id { color: var(--grey); width: 44px; flex: none; } .item .label { flex: 1; overflow: hidden;
+          white-space: nowrap; text-overflow: ellipsis; } .item .tag { font-size: 12px; color: var(--grey); }
+  #view { flex: 1; overflow-y: auto; padding: 16px 24px; }
+  .stats { display: flex; gap: 26px; flex-wrap: wrap; align-items: flex-end; }
+  .stat b { display: block; font-size: 19px; } .stat span { display: block; font-size: 12px; color: var(--grey); }
+</style>
+
+<header class="top"><div class="col">
+  <h1>Sentiment Features in a Tiny Review Model</h1>
+  <p class="subtitle">Decomposing a small transformer trained only to predict the next token of movie reviews into
+    sparse, interpretable features &mdash; and using them to steer what it writes.</p>
+  <a class="button" href="#steer">Steer the model &darr;</a><a class="button" href="#browser">Browse all features
+    &darr;</a>
+  <div class="byline">torch-alchemy &middot; microgpt workshop &middot; <span data-v="n.date"></span></div>
+</div></header>
+
+<main>
+<div class="col">
+<p>A language model trained only to predict the next token of movie reviews never sees a label saying whether a
+review is positive. Yet to predict well it helps to know: "the acting was superb, the plot&hellip;" continues
+differently from "the acting was wooden, the plot&hellip;". OpenAI's <i>sentiment neuron</i> found exactly this: a
+next-character model trained on Amazon reviews had one unit that tracked sentiment on its own [1]. Our workshop asks
+the same question of a much smaller model, and a linear probe (a weighted sum of the model's numbers, fitted on
+labelled sentences) shows that its activations do contain sentiment.</p>
+
+<p>But a probe only shows that sentiment can be <i>read off</i>. To understand what the model itself represents, we
+would like to look at its internal units and see what each means. The natural unit, a single number in a layer's
+activations (a <i>neuron</i>, or here a <i>dimension</i> of the residual stream &mdash; the vector each layer reads
+from and adds to), turns out to be a poor one: units are usually <i>polysemantic</i>, responding to many unrelated
+things. One explanation is <i>superposition</i>: a model can represent more features than it has dimensions by giving
+each feature its own direction, a combination of many dimensions, and relying on most features being inactive at any
+moment [2].</p>
+
+<p>If that is right, the features can be recovered by <i>dictionary learning</i>: rewriting each activation vector as
+a sparse combination of many more directions than it has dimensions. Anthropic showed that a <i>sparse
+autoencoder</i> (SAE) does this well [2]; we use the TopK variant, which keeps exactly the <i>k</i> largest features
+per token [3]. In this report we train one on the residual stream of a trained microgpt model, look closely at a
+few sentiment features &mdash; what they fire on, what they make the model say, and whether any single dimension does
+the same &mdash; then look at all <span data-v="n.features|num"></span> features at once. Everything below comes from
+<span data-v="n.tokens|num"></span> held-out IMDB tokens the model never trained on. The features discussed by number
+(#904, #1067, #1241) are those of the example model this page was written for; an SAE on another model finds similar
+features under other numbers.</p>
+
+<h2>Summary of Results</h2>
+<ul>
+<li><b>The SAE reconstructs the layer faithfully.</b> It explains <span data-v="q.variance_explained|pct"></span> of
+  the activations' variance with <span data-v="n.k"></span> active features per token, and with its reconstruction in
+  place of the layer the model keeps <span data-v="q.loss_recovered|pct"></span> of its performance; none of its
+  features is dead.</li>
+<li><b>Some features are clearly about sentiment.</b> Feature <a href="#f904">#904</a> fires on warm praise: alone it
+  tells positive SST sentences from negative ones <span data-v="d904.sst|pct"></span> of the time, and
+  <span data-v="d904.top_share|pct"></span> of the tokens where it fires most come from positive reviews.
+  <a href="#f1067">#1067</a> fires on "poorly", "dull" and "uninteresting"; <a href="#f1241">#1241</a> on approving
+  adjectives like "solid" and "excellent".</li>
+<li><b>These features are invisible in the dimensions.</b> The best single residual-stream dimension manages only
+  <span data-v="n.best_raw.1|pct"></span> on SST; <span data-v="n.over_60.0"></span> features beat 60% against
+  <span data-v="n.over_60.1"></span> dimension. The dimension most correlated with #904 is barely related to
+  sentiment.</li>
+<li><b>Features steer the model.</b> Clamping #904 to its usual maximum turns a negative continuation into "superb
+  &hellip; great performances"; clamping #1067 can make it complain that "the dialog was so flat". Above about 2&times; the text
+  breaks down.</li>
+<li><b>Sentiment is spread over many features.</b> A probe on all the SAE's features reaches
+  <span data-v="n.probe_sae|pct"></span> on SST dev, against <span data-v="n.probe_raw|pct"></span> on the raw
+  activations of the same layer.</li>
+</ul>
+
+<h2>Problem Setup</h2>
+<p>We decompose the residual stream after layer <span data-v="n.layer"></span> of <span data-v="n.layers"></span> of
+the model. It is the place where every layer's contribution is summed, and late enough to hold sentiment (the
+probe reads the last layer):</p>
+<table class="setup">
+<tr><th></th><th>Transformer</th><th>Sparse autoencoder</th></tr>
+<tr><td>Layers</td><td><span data-v="n.layers"></span> Llama-style decoder layers (attention + SwiGLU MLP)</td>
+  <td>encoder (linear + ReLU, keep the top <span data-v="n.k"></span>) and linear decoder</td></tr>
+<tr><td>Size</td><td>residual stream of <span data-v="n.hidden"></span> numbers; BPE vocabulary of
+  <span data-v="n.vocab|num"></span> tokens</td><td><span data-v="n.features|num"></span> features</td></tr>
+<tr><td>Data</td><td>its training text</td><td>~1.5 million layer-<span data-v="n.layer"></span>
+  activations from IMDB (not at <code>&lt;bos&gt;</code>, whose activations are unlike the rest)</td></tr>
+<tr><td>Loss</td><td>next-token cross-entropy</td><td>reconstruction error (mean squared); TopK keeps it sparse, so
+  no sparsity penalty is needed [3]</td></tr>
+</table>
+
+<h3>How can we tell it works?</h3>
+<p>As in the original work, no single number settles it; we use three. The SAE explains
+<span data-v="q.variance_explained|pct"></span> of the variance of activations it never trained on.
+Replacing the layer's output by the SAE's reconstruction raises the model's next-token loss only a little: measured
+against replacing the layer by its average (which destroys it), <span data-v="q.loss_recovered|pct"></span> of the
+loss is recovered. And <span data-v="n.dead"></span> features are dead (never fire). Finally, of course, the
+features have to make sense, which is what the rest of this report examines.</p>
+
+<h2>Detailed Investigations of Individual Features</h2>
+<p>For each feature we ask the questions the original paper asked, as far as our data allows: does it fire
+<i>specifically</i> on what we think, does it <i>cause</i> the matching behaviour downstream, and is it something a
+single dimension already does? Our <i>proxy</i> for sentiment &mdash; a cheap, independent signal to check the feature
+against &mdash; is the label of the review each token belongs to: <span data-v="n.positive_rate|pct"></span> of our
+tokens come from positive reviews. It is coarse (a negative review still praises some things), so we expect leaks.</p>
+
+<h3>Feature <a href="#f904">#904</a>: warm praise</h3>
+<p>#904 fires on <span data-v="d904.density|pct"></span> of tokens, mostly just after warm, approving words &mdash;
+"lovely, warm, sentimental", "wonderful and breathtaking". It is the best feature of all on SST: alone it scores
+<span data-v="d904.sst|pct"></span>.</p>
+<h4>Activation specificity</h4>
+<figure><div data-fig="spec" data-f="904"></div><figcaption>Share of the tokens #904 fires on that come from positive
+(<span style="color:#3a9e5f">green</span>) and negative (<span style="color:#d9534f">red</span>) reviews, by how
+strongly it fires. The dashed line is the share of all tokens from positive reviews. When it fires strongly, it is
+mostly in positive reviews.</figcaption></figure>
+<p>Overall <span data-v="d904.pos_share|pct"></span> of its activations come from positive reviews, rising to
+<span data-v="d904.top_share|pct"></span> for its strongest 1%. Hover any token below for the feature's activation
+there (as a share of its maximum); the underlined token is where it fires.</p>
+<div data-fig="examples" data-f="904"></div>
+<h4>Downstream effects</h4>
+<p>What does #904 do to the next token? Its decoder direction, passed through the final norm's scale and the output
+layer, gives each token's change in score when the feature fires (an approximation: it skips the last layer):</p>
+<div data-fig="logits" data-f="904"></div>
+<p>Clamping the feature &mdash; setting it to a multiple of its usual maximum at every position, and adding back what
+the SAE fails to reconstruct so nothing else changes &mdash; shows the same effect in real samples (same random seeds
+in every row):</p>
+<div data-fig="steer" data-f="904"></div>
+<h4>The feature is not a dimension</h4>
+<div data-fig="neuron" data-f="904"></div>
+
+<h3>Feature <a href="#f1067">#1067</a>: "poorly", "dull", "uninteresting"</h3>
+<p>#1067 is rarer (<span data-v="d1067.density|pct"></span> of tokens) and fires on the words of a weak review:
+"trite and melodramatic", "dull &amp; drab", "poorly written". Alone it scores <span data-v="d1067.sst|pct"></span>
+on SST, for negative sentiment.</p>
+<figure><div data-fig="spec" data-f="1067"></div><figcaption>As above, for #1067: it fires mostly in negative
+reviews.</figcaption></figure>
+<p>Only <span data-v="d1067.pos_share|pct"></span> of its activations come from positive reviews, and
+<span data-v="d1067.top_share|pct"></span> of its strongest 1%. That is a weaker split than #904's, and here the
+coarse proxy shows: the feature fires on a word ("forgettable", "far below the standard", "worst"), and positive
+reviews use such words too, for instance about other films. The examples show it tracks the word's negativity, not
+the review's verdict.</p>
+<div data-fig="examples" data-f="1067"></div>
+<div data-fig="logits" data-f="1067"></div>
+<div data-fig="steer" data-f="1067"></div>
+<div data-fig="neuron" data-f="1067"></div>
+
+<h3>Feature <a href="#f1241">#1241</a>: approving adjectives</h3>
+<p>#1241 fires on adjectives of approval &mdash; "solid", "excellent", "brilliant", "perfect" &mdash; and alone scores
+<span data-v="d1241.sst|pct"></span> on SST. Its strongest activations are on "solid" itself, as in "a solid
+performance".</p>
+<figure><div data-fig="spec" data-f="1241"></div><figcaption>As above, for #1241.</figcaption></figure>
+<div data-fig="examples" data-f="1241"></div>
+<div data-fig="logits" data-f="1241"></div>
+<div data-fig="steer" data-f="1241"></div>
+<div data-fig="neuron" data-f="1241"></div>
+
+<h2>Global Analysis</h2>
+<p>Are these three cherry-picked? For every feature and every residual-stream dimension of the same layer, we measure
+how well it alone separates positive from negative SST sentences (its maximum over a sentence's tokens, split halfway
+between the two classes' averages on train, scored on dev).</p>
+<figure><div data-fig="sst"></div><figcaption>Share of features (purple) and of dimensions (grey) at each
+single-unit SST accuracy (square-root scale, so the tail shows). <span data-v="n.over_60.0"></span> features exceed 60%; only
+<span data-v="n.over_60.1"></span> dimension does, and the best manages <span data-v="n.best_raw.1|pct"></span>
+(dimension <span data-v="n.best_raw.0"></span>).</figcaption></figure>
+<p>Most features are not about sentiment at all &mdash; they track words, punctuation and phrasing, as the browser
+below shows &mdash; but the sentiment ones stand out far more than any dimension. Sentiment is also spread across
+many features: an L1-regularised probe on all SAE features reaches <span data-v="n.probe_sae|pct"></span> on SST dev,
+against <span data-v="n.probe_raw|pct"></span> on the raw activations.</p>
+<figure><div data-fig="density"></div><figcaption>How often features fire (share of tokens, log scale). With
+<span data-v="n.k"></span> active per token out of <span data-v="n.features|num"></span>, the average feature fires on
+1.6% of tokens; most are rarer.</figcaption></figure>
+</div>
+
+<div class="wide">
+<h2 id="steer">Steering Explorer</h2>
+<p>Pick a feature, a strength and a prompt: on the left the model's normal
+continuations, on the right the same samples (same random seeds) with the feature clamped at that multiple of its
+usual maximum. 0&times; switches the feature off.</p>
+<div class="controls">
+  <label>Feature <select id="s-feature"></select></label>
+  <label>Strength <input id="s-strength" type="range" min="0" max="4" step="1" value="2"> <b id="s-value"></b></label>
+  <label>Prompt <select id="s-prompt"></select></label>
+</div>
+<table class="samples" style="width:100%"><thead><tr><th style="width:50%">normal</th><th>clamped</th></tr></thead>
+  <tbody id="s-out"></tbody></table>
+<div id="live" style="display:none">
+  <h3>Your own prompt</h3>
+  <div class="controls"><textarea id="l-prompt" rows="2" style="width:100%">the plot</textarea></div>
+  <div id="l-clamps"></div>
+  <div class="controls"><button type="button" id="l-add" style="background:#888">+ clamp</button>
+    <label>samples <input id="l-n" type="number" min="1" max="4" value="2" style="width:60px"></label>
+    <label>tokens <input id="l-tokens" type="number" min="1" max="80" value="40" style="width:70px"></label>
+    <button type="button" id="l-go">Generate</button> <span id="l-status"></span></div>
+  <table class="samples" style="width:100%"><thead><tr><th style="width:50%">normal</th><th>clamped</th></tr>
+    </thead><tbody id="l-out"></tbody></table>
+</div>
+<p class="note" id="offline">These samples were generated in advance for <span id="s-count"></span> features. To type
+your own prompts and clamp any features, serve this page with a live model:
+<code>python3 -m experiments.sae.serve checkpoint=<span data-v="n.checkpoint"></span></code>, then open
+<code>http://localhost:8000</code>.</p>
+
+<h2 id="browser">Feature Browser</h2>
+<p>Every feature, with the text it fires on most. Search for a number or a word (<i>904</i>, <i>funny</i>), or sort
+the list. The label is the words most often strongly shaded in a feature's top examples &mdash; read the examples.</p>
+<div class="browser">
+  <aside><div class="head">
+    <input id="search" placeholder="search: 904, great, boring&hellip;">
+    <select id="sort"><option value="positive">most positive on SST first</option>
+      <option value="negative">most negative on SST first</option><option value="density">most frequent first</option>
+      <option value="rare">rarest first</option><option value="id">by number</option></select>
+  </div><div id="list"></div></aside>
+  <div id="view"></div>
+</div>
+</div>
+
+<div class="col">
+<h2>Limitations</h2>
+<ul>
+<li>The model is tiny (<span data-v="n.layers"></span> layers, trained only on movie reviews) and we study one
+  layer; many features are messier than in the papers, and some are not interpretable at all.</li>
+<li>The sentiment proxy is the review's label, so a feature for negative words in a positive review counts against
+  it. Labels in the browser are automatic.</li>
+<li>Examples come from <span data-v="n.tokens|num"></span> held-out tokens, so very rare features show few.</li>
+<li>Downstream effects through the output layer skip the last decoder layer, so they are approximate; the steering
+  samples are the direct test.</li>
+</ul>
+
+<h2>Related Work</h2>
+<p>We follow Anthropic's <i>Towards Monosemanticity</i> [2], which decomposed a one-layer transformer's MLP with a
+sparse autoencoder, closely in method and presentation; Golden Gate Claude applied feature clamping at scale. The
+TopK SAE is from Gao et al. [3]. The question itself comes from the sentiment neuron [1].</p>
+
+<h2>How to reproduce</h2>
+<pre># from torch-alchemy/, with a trained model
+python3 -m experiments.sae.train   checkpoint=&lt;model.safetensors&gt;           # train the SAE (about 1 minute)
+python3 -m experiments.sae.article checkpoint=&lt;model.safetensors&gt;           # this page: runs/sae/index.html
+python3 -m experiments.sae.serve   checkpoint=&lt;model.safetensors&gt;           # the page plus live steering
+python3 -m experiments.sae.steer   checkpoint=&lt;model.safetensors&gt; clamp.904=1 prompt='this movie'  # in a terminal</pre>
+<p>The explorer's built-in samples are precomputed; your own prompts and any feature need a live model
+(<code>serve</code> or <code>steer</code>).</p>
+
+<h2>References</h2>
+<ol style="font-size:14px">
+<li>Radford, Jozefowicz and Sutskever, 2017. <a href="https://arxiv.org/abs/1704.01444">Learning to Generate Reviews
+  and Discovering Sentiment</a>.</li>
+<li>Bricken, Templeton, Batson, Chen, Jermyn et al., 2023. <a
+  href="https://transformer-circuits.pub/2023/monosemantic-features">Towards Monosemanticity: Decomposing Language
+  Models With Dictionary Learning</a>. Transformer Circuits Thread.</li>
+<li>Gao, Dupré la Tour, Tillman, Goh, Troll, Radford, Sutskever, Leike and Wu, 2024. <a
+  href="https://arxiv.org/abs/2406.04093">Scaling and evaluating sparse autoencoders</a>.</li>
+</ol>
+</div>
+</main>
+
+<script id="data" type="application/json">/*DATA*/</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent), V = D.vocab, F = D.features, X = D.explorer;
+const STEP = ['#19516b', '#6e5e9c', '#cf6294', '#fa8c6c', '#ffae19'];  // data colours
+const POS = '#3a9e5f', NEG = '#d9534f';  // positive / negative reviews
+const dive = id => D.dives.find(d => d.id === id);
+const pct = x => (100 * x).toFixed(Math.abs(x) < 0.001 ? 3 : Math.abs(x) < 0.1 ? 2 : 1) + '%';
+const esc = s => s.replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'})[c]);
+const tok = t => esc(V[t]).replace(/\n/g, '⏎');
+
+// Numbers in the text: data-v="n.key", "q.key" (SAE quality) or "d904.key", with an optional |format
+document.querySelectorAll('[data-v]').forEach(e => {
+  const [path, fmt] = e.dataset.v.split('|'), [head, ...rest] = path.split('.');
+  let v = head === 'n' ? D.numbers : head === 'q' ? D.numbers.quality : dive(+head.slice(1));
+  for (const k of rest) v = v?.[k];
+  e.textContent = v === undefined ? '?' : fmt === 'pct' ? pct(v) : fmt === 'num' ? v.toLocaleString() : v;
+});
+
+function tokens([ids, acts, at]) {
+  return '<div class="ex">' + ids.map((t, j) => `<span title="${acts[j]}% of max" class="${j === at ? 'at' : ''}"` +
+    ` style="background:rgba(161,82,194,${acts[j] / 100});${acts[j] > 60 ? 'color:#fff' : ''}">${tok(t)}</span>`)
+    .join('') + '</div>';
+}
+const anchor = (i, n) => i === 0 ? 'start' : i >= n - 1 ? 'end' : 'middle';  // keep edge labels inside
+const chips = ids => ids.map(t => `<span class="chip">${tok(t)}</span>`).join('');
+function bars(values, {w = 640, h = 150, color = STEP[0], labels = [], fmt = v => v} = {}) {
+  const top = Math.max(1e-9, ...values), bw = w / values.length;
+  return `<svg width="${w}" height="${h + 34}" style="max-width:100%">` + values.map((v, i) =>
+    `<rect x="${i * bw + 1}" y="${h - h * v / top}" width="${bw - 2}" height="${h * v / top}" fill="${color}" rx="2">` +
+    `<title>${labels[i] ?? i}: ${fmt(v)}</title></rect>`).join('') +
+    labels.map((l, i) => l === null ? '' : `<text x="${anchor(i, values.length) === 'start' ? 0 : anchor(i,
+    values.length) === 'end' ? w : i * bw + bw / 2}" y="${h + 14}" font-size="10" fill="#8a8a8a" text-anchor="` +
+    `${anchor(i, values.length)}">${l}</text>`).join('') + '</svg>';
+}
+
+const FIGS = {
+  spec(d) {  // 100%-stacked bars: share of activating tokens from positive / negative reviews, by activation level
+    const w = 640, h = 160, bw = w / 10, base = h * (1 - D.numbers.positive_rate);
+    let s = `<svg width="${w}" height="${h + 44}" style="max-width:100%">`;
+    d.spec.forEach(([p, n], i) => {
+      const t = p + n || 1;
+      s += `<rect x="${i * bw + 2}" y="0" width="${bw - 4}" height="${h * n / t}" fill="${NEG}"><title>negative ` +
+        `${n}</title></rect><rect x="${i * bw + 2}" y="${h * n / t}" width="${bw - 4}" height="${h * p / t}" ` +
+        `fill="${POS}"><title>positive ${p}</title></rect><text x="${i * bw + bw / 2}" y="${h + 14}" ` +
+        `font-size="10" fill="#8a8a8a" text-anchor="middle">${i * 10}-${i * 10 + 10}%</text><text x="${i * bw + bw / 2}"` +
+        ` y="${h + 27}" font-size="9.5" fill="#aaa" text-anchor="middle">${(p + n).toLocaleString()}</text>`;
+    });
+    return s + `<line x1="0" x2="${w}" y1="${base}" y2="${base}" stroke="#1a1a1a" stroke-dasharray="4 3"/>` +
+      `<text x="${w}" y="${h + 40}" font-size="10" fill="#8a8a8a" text-anchor="end">activation, % of its max ` +
+      `(count below)</text></svg>`;
+  },
+  examples(d) {
+    return Object.entries(d.examples).map(([k, exs]) => `<h4>${k}</h4>` + exs.map(tokens).join('')).join('');
+  },
+  logits(d) {
+    const n = d.logit_hist.map(c => Math.sqrt(c));
+    return `<p><b>Pushes up:</b> ${chips(d.up)}<br><b>Pushes down:</b> ${chips(d.down)}</p>` +
+      bars(n, {h: 60, color: STEP[1], labels: n.map((_, i) => i === 0 ? 'down' : i === n.length - 1 ? 'up' : null),
+               fmt: v => Math.round(v * v) + ' tokens'}) +
+      '<figcaption>Every token\'s change in score (histogram, square-root scale): most are near zero; the ' +
+      'listed tokens are the tails.</figcaption>';
+  },
+  steer(d) {
+    const f = String(d.id), p = X.prompts[0], c = X.clamped[f]?.[p];
+    if (!c) return '';
+    const rows = [['normal', X.normal[p]], ...[0, 2, 4].map(i => [`${X.strengths[i]}× clamped`, c[i]])];
+    return `<table class="samples"><tr><th>"${esc(p)}…"</th><th>seed 0</th><th>seed 1</th></tr>` +
+      rows.map(([l, s]) => `<tr><td>${l}</td>${s.map(t => `<td>${esc(t)}</td>`).join('')}</tr>`).join('') +
+      `</table><figcaption>Try other strengths and prompts in the <a href="#steer-${f}">steering explorer</a>.` +
+      '</figcaption>';
+  },
+  neuron(d) {
+    const n = d.neuron;
+    return `<table class="setup"><tr><th></th><th>feature #${d.id}</th><th>dimension ${n.dim}</th></tr>` +
+      `<tr><td>correlation with the feature (over all tokens)</td><td>1</td><td>${n.corr.toFixed(2)}</td></tr>` +
+      `<tr><td>its strongest 1% of tokens from positive reviews</td><td>${pct(d.top_share)}</td>` +
+      `<td>${pct(n.top_share)}</td></tr><tr><td>alone on SST</td><td>${pct(Math.abs(d.sst))}</td>` +
+      `<td>${pct(Math.abs(n.sst))}</td></tr></table><figcaption>Dimension ${n.dim} is the residual-stream number whose ` +
+      'activations correlate most with the feature (sign flipped if negative). The correlation is weak, and the ' +
+      'dimension says little about sentiment: the feature is a direction spread over many dimensions.</figcaption>';
+  },
+  sst() {  // square-root heights, so the few sentiment features in the tail stay visible
+    const norm = a => { const s = a.reduce((x, y) => x + y, 0) || 1; return a.map(v => Math.sqrt(v / s)); };
+    const a = norm(D.sst_hist.sae), b = norm(D.sst_hist.raw), w = 640, h = 140, bw = w / a.length;
+    const top = Math.max(...a, ...b);
+    return `<svg width="${w}" height="${h + 30}" style="max-width:100%">` + a.map((v, i) =>
+      `<rect x="${i * bw + 1}" y="${h - h * v / top}" width="${bw / 2 - 1}" height="${h * v / top}" fill="#a152c2">` +
+      `<title>features ${pct(v * v)}</title></rect><rect x="${i * bw + bw / 2}" y="${h - h * b[i] / top}" width="` +
+      `${bw / 2 - 1}" height="${h * b[i] / top}" fill="#bbb"><title>dimensions ${pct(b[i] * b[i])}</title></rect>`).join('') +
+      [0, 5, 10, 15, 20, 25, 30].map(i => `<text x="${i * bw}" y="${h + 14}" font-size="10" fill="#8a8a8a" ` +
+      `text-anchor="${anchor(i, 31)}">${50 + i}%</text>`).join('') + '</svg>';
+  },
+  density() {
+    return bars(D.density_hist, {h: 110, color: STEP[2], fmt: v => v + ' features',
+      labels: D.density_hist.map((_, i) => i % 4 === 0 ? `1e${-6 + i / 4}` : null)});
+  },
+};
+document.querySelectorAll('[data-fig]').forEach(e => e.innerHTML = FIGS[e.dataset.fig](dive(+e.dataset.f)));
+
+// Steering explorer: precomputed samples, and live ones when the page is served by experiments.sae.serve
+const sel = (id, opts) => document.getElementById(id).innerHTML = opts.map(([v, l]) => `<option value="${v}">${l}` +
+  '</option>').join('');
+const label = f => `#${f} ${F[f].label} (${F[f].sst > 0 ? '+' : '−'}${pct(Math.abs(F[f].sst))})`;
+sel('s-feature', X.features.map(f => [f, label(f)]));
+sel('s-prompt', X.prompts.map((p, i) => [i, p]));
+document.getElementById('s-count').textContent = X.features.length;
+const pairs = (a, b) => a.map((t, i) => `<tr><td>${esc(t)}</td><td>${esc(b[i] ?? '')}</td></tr>`).join('');
+function explore() {
+  const f = document.getElementById('s-feature').value, i = +document.getElementById('s-strength').value;
+  const p = X.prompts[+document.getElementById('s-prompt').value];
+  document.getElementById('s-value').textContent = X.strengths[i] + '×';
+  document.getElementById('s-out').innerHTML = pairs(X.normal[p].map(t => p + t), X.clamped[f][p][i].map(t => p + t));
+}
+['s-feature', 's-strength', 's-prompt'].forEach(id => document.getElementById(id).oninput = explore);
+explore();
+
+function clampRow(f = 904, s = 1) {
+  const row = document.createElement('div');
+  row.className = 'controls';
+  row.innerHTML = `<label>feature <input type="number" min="0" max="${F.length - 1}" value="${f}" style="width:80px">` +
+    `</label><label>strength <input type="range" min="0" max="3" step="0.25" value="${s}"> <b>${s}×</b></label>` +
+    '<button type="button" style="background:#888">remove</button>';
+  row.querySelector('input[type=range]').oninput = e => row.querySelector('b').textContent = e.target.value + '×';
+  row.querySelector('button').onclick = () => row.remove();
+  document.getElementById('l-clamps').append(row);
+}
+async function generateLive() {
+  const clamps = {};
+  document.querySelectorAll('#l-clamps .controls').forEach(r => clamps[r.querySelector('input').value] =
+    +r.querySelector('input[type=range]').value);
+  const prompt = document.getElementById('l-prompt').value, status = document.getElementById('l-status');
+  status.textContent = 'generating…';
+  const res = await fetch('/api/steer', {method: 'POST', body: JSON.stringify({prompt, clamps,
+    num_samples: +document.getElementById('l-n').value, max_tokens: +document.getElementById('l-tokens').value})});
+  const r = await res.json();
+  status.textContent = r.error || '';
+  if (!r.error) document.getElementById('l-out').innerHTML = pairs(r.normal.map(t => prompt + t),
+                                                                   r.clamped.map(t => prompt + t));
+}
+let live = false;
+if (location.protocol.startsWith('http')) fetch('/api/health').then(r => r.ok && r.json()).then(h => {
+  if (!h) return;
+  live = true;
+  document.getElementById('live').style.display = '';
+  document.getElementById('offline').textContent = 'Live model connected: type any prompt and clamp any features ' +
+    'below.';
+  clampRow();
+  document.getElementById('l-add').onclick = () => clampRow();
+  document.getElementById('l-go').onclick = generateLive;
+}).catch(() => {});
+function steerFeature(f) {
+  if (X.clamped[String(f)]) { document.getElementById('s-feature').value = f; explore(); }
+  if (live) { document.getElementById('l-clamps').innerHTML = ''; clampRow(f, 1); }
+  document.getElementById('steer').scrollIntoView();
+}
+
+// Feature browser
+function renderList() {
+  const q = document.getElementById('search').value.trim().toLowerCase(), sort = document.getElementById('sort').value;
+  const key = {positive: i => -F[i].sst, negative: i => F[i].sst, density: i => -F[i].density,
+               rare: i => F[i].density || 1, id: i => i}[sort];
+  const ids = F.map((_, i) => i).filter(i => !q || String(i) === q || F[i].label.includes(q))
+    .sort((a, b) => key(a) - key(b));
+  document.getElementById('list').innerHTML = ids.map(i => `<div class="item" data-i="${i}"><span class="id">#${i}` +
+    `</span><span class="label">${esc(F[i].label || '(rare)')}</span><span class="tag">${Math.abs(F[i].sst) >= 0.55 ?
+    (F[i].sst > 0 ? '+' : '−') + pct(Math.abs(F[i].sst)) : pct(F[i].density)}</span></div>`).join('');
+}
+document.getElementById('list').onclick = e => { const it = e.target.closest('.item'); if (it) location.hash = 'f' +
+  it.dataset.i; };
+function showFeature(i) {
+  const f = F[i], stat = (v, l) => `<div class="stat"><b>${v}</b><span>${l}</span></div>`;
+  const pre = X.clamped[String(i)], cmd = `python3 -m experiments.sae.steer checkpoint=${D.numbers.checkpoint} ` +
+    `clamp.${i}=1 prompt='i thought the acting was'`;
+  document.getElementById('view').innerHTML = `<h3 style="margin-top:0">Feature #${i} <span style="color:#8a8a8a;` +
+    `font-weight:normal">${esc(f.label)}</span></h3><div class="stats">${stat(pct(f.density), 'of tokens it fires on')}` +
+    `${stat(f.max, 'largest activation')}${stat(pct(Math.abs(f.sst)), `alone on SST (${f.sst > 0 ? 'positive' :
+    'negative'}; 50% = chance)`)}<div class="stat">${bars(f.hist, {w: 160, h: 40, color: '#a152c2'})}<span>how ` +
+    `strongly it fires, when it does</span></div></div><h4>Pushes the next token towards</h4>${chips(f.up)}` +
+    `<h4>&hellip; and away from</h4>${chips(f.down)}<h4>Strongest activations</h4>${f.strongest.map(tokens).join('')}` +
+    `<h4>About half as strong: does the meaning hold?</h4>${f.half.map(tokens).join('') || '<p>none</p>'}` +
+    `<h4>Steer this feature</h4>${pre || live ? `<p><a href="#steer-${i}">Open it in the steering explorer</a></p>` :
+    ''}${live ? '' : `<pre>${esc(cmd)}</pre>`}`;
+  document.querySelectorAll('.item').forEach(e => e.classList.toggle('on', e.dataset.i === String(i)));
+}
+document.getElementById('search').oninput = renderList;
+document.getElementById('sort').onchange = renderList;
+renderList();
+showFeature(904);
+function route() {
+  const f = location.hash.match(/^#f(\d+)$/), s = location.hash.match(/^#steer-(\d+)$/);
+  if (f && F[+f[1]]) { showFeature(+f[1]); document.getElementById('browser').scrollIntoView(); }
+  if (s && F[+s[1]]) steerFeature(+s[1]);
+}
+window.onhashchange = route;
+route();
+</script>
+</html>

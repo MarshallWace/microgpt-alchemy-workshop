@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="310" viewBox="0 0 640 310" font-family="Lato, Calibri, Segoe UI, Arial, sans-serif"><style>@media (prefers-color-scheme: dark) {.ink {fill: #ececec}.box {fill: #3e2a4a}.boxg {fill: #333333}.grid {stroke: #333333}}</style><defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/></marker><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a152c2"/></marker></defs>
+<line x1="70" y1="250.0" x2="560" y2="250.0" class="grid" stroke="#e9e9e9" stroke-width="1"/>
+<text x="60.0" y="255.0" font-size="13" fill="#8a8a8a" text-anchor="end">2.5</text>
+<line x1="70" y1="202.2" x2="560" y2="202.2" class="grid" stroke="#e9e9e9" stroke-width="1"/>
+<text x="60.0" y="207.2" font-size="13" fill="#8a8a8a" text-anchor="end">3.0</text>
+<line x1="70" y1="154.3" x2="560" y2="154.3" class="grid" stroke="#e9e9e9" stroke-width="1"/>
+<text x="60.0" y="159.3" font-size="13" fill="#8a8a8a" text-anchor="end">3.5</text>
+<line x1="70" y1="106.5" x2="560" y2="106.5" class="grid" stroke="#e9e9e9" stroke-width="1"/>
+<text x="60.0" y="111.5" font-size="13" fill="#8a8a8a" text-anchor="end">4.0</text>
+<line x1="70" y1="58.7" x2="560" y2="58.7" class="grid" stroke="#e9e9e9" stroke-width="1"/>
+<text x="60.0" y="63.7" font-size="13" fill="#8a8a8a" text-anchor="end">4.5</text>
+<text x="70.0" y="272.0" font-size="13" fill="#8a8a8a" text-anchor="middle">1</text>
+<text x="188.8" y="272.0" font-size="13" fill="#8a8a8a" text-anchor="middle">25</text>
+<text x="312.5" y="272.0" font-size="13" fill="#8a8a8a" text-anchor="middle">50</text>
+<text x="436.3" y="272.0" font-size="13" fill="#8a8a8a" text-anchor="middle">75</text>
+<text x="560.0" y="272.0" font-size="13" fill="#8a8a8a" text-anchor="middle">100</text>
+<text x="315.0" y="294.0" font-size="14" fill="#8a8a8a" text-anchor="middle">training step</text>
+<text x="20.0" y="20.0" font-size="14" fill="#8a8a8a" text-anchor="start">loss</text>
+<line x1="70" y1="53.0" x2="560" y2="53.0" stroke="#8a8a8a" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="560.0" y="45.0" font-size="13" fill="#8a8a8a" text-anchor="end">knows nothing: log(96) = 4.56</text>
+<path d="M114.5,91.8 L164.0,185.7 L213.5,197.3 L263.0,194.8 L312.5,217.4 L362.0,224.9 L411.5,214.4 L461.0,231.2 L510.5,219.1 L560.0,218.9" fill="none" stroke="#a152c2" stroke-width="2.5"/>
+<circle cx="114.5" cy="91.8" r="4" fill="#a152c2"/>
+<circle cx="164.0" cy="185.7" r="4" fill="#a152c2"/>
+<circle cx="213.5" cy="197.3" r="4" fill="#a152c2"/>
+<circle cx="263.0" cy="194.8" r="4" fill="#a152c2"/>
+<circle cx="312.5" cy="217.4" r="4" fill="#a152c2"/>
+<circle cx="362.0" cy="224.9" r="4" fill="#a152c2"/>
+<circle cx="411.5" cy="214.4" r="4" fill="#a152c2"/>
+<circle cx="461.0" cy="231.2" r="4" fill="#a152c2"/>
+<circle cx="510.5" cy="219.1" r="4" fill="#a152c2"/>
+<circle cx="560.0" cy="218.9" r="4" fill="#a152c2"/>
+<text x="568.0" y="224.4" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">2.82</text>
+<text x="124.5" y="88.2" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">4.15</text>
+</svg>

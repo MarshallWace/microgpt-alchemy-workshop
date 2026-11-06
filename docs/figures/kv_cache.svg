@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="216" viewBox="0 0 600 216" font-family="Lato, Calibri, Segoe UI, Arial, sans-serif"><style>@media (prefers-color-scheme: dark) {.ink {fill: #ececec}.box {fill: #3e2a4a}.boxg {fill: #333333}.grid {stroke: #333333}}</style><defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/></marker><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a152c2"/></marker></defs>
+<text x="30.0" y="24.0" font-size="15" fill="#8a8a8a" text-anchor="start">reads</text>
+<text x="210.0" y="24.0" font-size="15" fill="#8a8a8a" text-anchor="start">cache: keys and values of everything read so far</text>
+<rect x="30.0" y="40.0" width="80.0" height="44.0" rx="6" class="box" fill="#efe3f5"/><text x="70.0" y="68.3" font-size="18" fill="#a152c2" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">the</text>
+<line x1="118.0" y1="62.0" x2="196.0" y2="62.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="210.0" y="40.0" width="80.0" height="44.0" rx="6" class="box" fill="#efe3f5"/><text x="250.0" y="68.3" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">the</text>
+<rect x="30.0" y="98.0" width="80.0" height="44.0" rx="6" class="box" fill="#efe3f5"/><text x="70.0" y="126.3" font-size="18" fill="#a152c2" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">film</text>
+<line x1="118.0" y1="120.0" x2="196.0" y2="120.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="210.0" y="98.0" width="80.0" height="44.0" rx="6" class="boxg" fill="#e9e9e9"/><text x="250.0" y="126.3" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">the</text>
+<rect x="302.0" y="98.0" width="80.0" height="44.0" rx="6" class="box" fill="#efe3f5"/><text x="342.0" y="126.3" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">film</text>
+<rect x="30.0" y="156.0" width="80.0" height="44.0" rx="6" class="box" fill="#efe3f5"/><text x="70.0" y="184.3" font-size="18" fill="#a152c2" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">was</text>
+<line x1="118.0" y1="178.0" x2="196.0" y2="178.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="210.0" y="156.0" width="80.0" height="44.0" rx="6" class="boxg" fill="#e9e9e9"/><text x="250.0" y="184.3" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">the</text>
+<rect x="302.0" y="156.0" width="80.0" height="44.0" rx="6" class="boxg" fill="#e9e9e9"/><text x="342.0" y="184.3" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">film</text>
+<rect x="394.0" y="156.0" width="80.0" height="44.0" rx="6" class="box" fill="#efe3f5"/><text x="434.0" y="184.3" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">was</text>
+</svg>

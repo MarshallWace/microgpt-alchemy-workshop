@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="186" viewBox="0 0 920 186" font-family="Lato, Calibri, Segoe UI, Arial, sans-serif"><style>@media (prefers-color-scheme: dark) {.ink {fill: #ececec}.box {fill: #3e2a4a}.boxg {fill: #333333}.grid {stroke: #333333}}</style><defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/></marker><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a152c2"/></marker></defs>
+<rect x="20.0" y="20.0" width="200.0" height="110.0" rx="8" class="box" fill="#efe3f5"/>
+<circle cx="44" cy="44" r="14" fill="#a152c2"/>
+<text x="44.0" y="50.0" font-size="16" fill="#ffffff" text-anchor="middle" font-weight="700">1</text>
+<text x="66.0" y="51.0" font-size="19" class="ink" fill="#1a1a1a" text-anchor="start" font-weight="700">guess</text>
+<text x="120.0" y="88.0" font-size="15" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">reads &quot;the fil&quot;</text>
+<text x="120.0" y="112.0" font-size="15" fill="#8a8a8a" text-anchor="middle">gives &quot;m&quot; 12%</text>
+<line x1="222.0" y1="75.0" x2="242.0" y2="75.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="245.0" y="20.0" width="200.0" height="110.0" rx="8" class="box" fill="#efe3f5"/>
+<circle cx="269" cy="44" r="14" fill="#a152c2"/>
+<text x="269.0" y="50.0" font-size="16" fill="#ffffff" text-anchor="middle" font-weight="700">2</text>
+<text x="291.0" y="51.0" font-size="19" class="ink" fill="#1a1a1a" text-anchor="start" font-weight="700">loss</text>
+<text x="345.0" y="88.0" font-size="15" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">−log(0.12)</text>
+<text x="345.0" y="112.0" font-size="15" fill="#8a8a8a" text-anchor="middle">= 2.12</text>
+<line x1="447.0" y1="75.0" x2="467.0" y2="75.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="470.0" y="20.0" width="200.0" height="110.0" rx="8" class="box" fill="#efe3f5"/>
+<circle cx="494" cy="44" r="14" fill="#a152c2"/>
+<text x="494.0" y="50.0" font-size="16" fill="#ffffff" text-anchor="middle" font-weight="700">3</text>
+<text x="516.0" y="51.0" font-size="19" class="ink" fill="#1a1a1a" text-anchor="start" font-weight="700">gradients</text>
+<text x="570.0" y="88.0" font-size="15" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">backward()</text>
+<text x="570.0" y="112.0" font-size="15" fill="#8a8a8a" text-anchor="middle">which way to turn each knob</text>
+<line x1="672.0" y1="75.0" x2="692.0" y2="75.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="695.0" y="20.0" width="200.0" height="110.0" rx="8" class="box" fill="#efe3f5"/>
+<circle cx="719" cy="44" r="14" fill="#a152c2"/>
+<text x="719.0" y="50.0" font-size="16" fill="#ffffff" text-anchor="middle" font-weight="700">4</text>
+<text x="741.0" y="51.0" font-size="19" class="ink" fill="#1a1a1a" text-anchor="start" font-weight="700">update</text>
+<text x="795.0" y="88.0" font-size="15" class="ink" fill="#1a1a1a" text-anchor="middle">AdamW</text>
+<text x="795.0" y="112.0" font-size="15" fill="#8a8a8a" text-anchor="middle">turns every knob a little</text>
+<path d="M795,132 L795,170 L120,170 L120,134" fill="none" stroke="#a152c2" stroke-width="2.5" marker-end="url(#a)"/>
+<text x="457.0" y="162.0" font-size="15" fill="#a152c2" text-anchor="middle" font-weight="700">repeat with the next piece of text</text>
+</svg>

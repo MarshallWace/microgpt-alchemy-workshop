@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="320" viewBox="0 0 740 320" font-family="Lato, Calibri, Segoe UI, Arial, sans-serif"><style>@media (prefers-color-scheme: dark) {.ink {fill: #ececec}.box {fill: #3e2a4a}.boxg {fill: #333333}.boxa {fill: #5c3a70}}</style><defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/></marker><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a152c2"/></marker></defs>
+<text x="20.0" y="42.0" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">1</text>
+<text x="40.0" y="42.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start">find the newest step checkpoint</text>
+<text x="40.0" y="59.0" font-size="12" fill="#8a8a8a" text-anchor="start">latest_checkpoint(log_dir)</text>
+<rect x="330.0" y="26.0" width="130.0" height="30.0" rx="8" class="box" fill="#efe3f5"/><text x="395.0" y="45.5" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">step000200.pt</text>
+<rect x="464.0" y="26.0" width="130.0" height="30.0" rx="8" class="box" fill="#efe3f5"/><text x="529.0" y="45.5" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">step000400.pt</text>
+<rect x="464.0" y="26.0" width="130.0" height="30.0" rx="8" fill="none" stroke="#a152c2" stroke-width="2"/>
+<text x="20.0" y="102.0" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">2</text>
+<text x="40.0" y="102.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start">drop metrics after it</text>
+<text x="40.0" y="119.0" font-size="12" fill="#8a8a8a" text-anchor="start">truncate_metrics: steps 401, 402, …</text>
+<rect x="330.0" y="86.0" width="90.0" height="30.0" rx="8" class="box" fill="#efe3f5"/><text x="375.0" y="105.5" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">… 300</text>
+<rect x="424.0" y="86.0" width="90.0" height="30.0" rx="8" class="box" fill="#efe3f5"/><text x="469.0" y="105.5" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">400</text>
+<rect x="518.0" y="86.0" width="90.0" height="30.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="563.0" y="105.5" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">450 ✕</text>
+<rect x="612.0" y="86.0" width="90.0" height="30.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="657.0" y="105.5" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">500 ✕</text>
+<text x="20.0" y="162.0" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">3</text>
+<text x="40.0" y="162.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start">build everything as usual</text>
+<text x="40.0" y="179.0" font-size="12" fill="#8a8a8a" text-anchor="start">tokenizer, model, optimizers, schedules</text>
+<rect x="330.0" y="146.0" width="90.0" height="30.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="375.0" y="165.6" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">tokenizer</text>
+<rect x="424.0" y="146.0" width="90.0" height="30.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="469.0" y="165.6" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">model</text>
+<rect x="518.0" y="146.0" width="90.0" height="30.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="563.0" y="165.6" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">optimizers</text>
+<rect x="612.0" y="146.0" width="90.0" height="30.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="657.0" y="165.6" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">schedules</text>
+<text x="20.0" y="222.0" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">4</text>
+<text x="40.0" y="222.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start">load the saved state into them</text>
+<text x="40.0" y="239.0" font-size="12" fill="#8a8a8a" text-anchor="start">load_train_state</text>
+<rect x="330.0" y="206.0" width="184.0" height="46.0" rx="8" class="box" fill="#efe3f5"/><text x="422.0" y="227.0" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle">step000400.safetensors</text><text x="422.0" y="246.0" font-size="12" fill="#8a8a8a" text-anchor="middle">the weights</text>
+<rect x="524.0" y="206.0" width="184.0" height="46.0" rx="8" class="box" fill="#efe3f5"/><text x="616.0" y="227.0" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle">step000400.pt</text><text x="616.0" y="246.0" font-size="12" fill="#8a8a8a" text-anchor="middle">optimizers, schedules, rng</text>
+<text x="20.0" y="290.0" font-size="15" fill="#a152c2" text-anchor="start" font-weight="700">5</text>
+<text x="40.0" y="290.0" font-size="14" class="ink" fill="#1a1a1a" text-anchor="start">continue from step 401</text>
+<line x1="422.0" y1="254.0" x2="422.0" y2="276.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<line x1="616.0" y1="254.0" x2="616.0" y2="276.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="330.0" y="278.0" width="378.0" height="30.0" rx="8" class="boxg" fill="#e9e9e9"/><text x="519.0" y="297.6" font-size="13" class="ink" fill="#1a1a1a" text-anchor="middle">the training loop, as if it never stopped</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="186" viewBox="0 0 900 186" font-family="Lato, Calibri, Segoe UI, Arial, sans-serif"><style>@media (prefers-color-scheme: dark) {.ink {fill: #ececec}.box {fill: #3e2a4a}.boxg {fill: #333333}.grid {stroke: #333333}}</style><defs><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/></marker><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a152c2"/></marker></defs>
+<text x="30.0" y="112.0" font-size="22" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">x</text>
+<line x1="48.0" y1="106.0" x2="74.0" y2="106.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="78.0" y="82.0" width="110.0" height="48.0" rx="8" class="box" fill="#efe3f5"/><text x="133.0" y="111.6" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">RMSNorm</text>
+<line x1="190.0" y1="106.0" x2="218.0" y2="106.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="222.0" y="82.0" width="120.0" height="48.0" rx="8" class="box" fill="#efe3f5"/><text x="282.0" y="111.6" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">attention</text>
+<line x1="344.0" y1="106.0" x2="376.0" y2="106.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<circle cx="398" cy="106" r="20" class="box" fill="#efe3f5"/>
+<text x="398.0" y="113.0" font-size="22" class="ink" fill="#1a1a1a" text-anchor="middle">+</text>
+<line x1="418.0" y1="106.0" x2="446.0" y2="106.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="450.0" y="82.0" width="110.0" height="48.0" rx="8" class="box" fill="#efe3f5"/><text x="505.0" y="111.6" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">RMSNorm</text>
+<line x1="562.0" y1="106.0" x2="590.0" y2="106.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<rect x="594.0" y="82.0" width="100.0" height="48.0" rx="8" class="box" fill="#efe3f5"/><text x="644.0" y="111.6" font-size="16" class="ink" fill="#1a1a1a" text-anchor="middle">MLP</text>
+<line x1="696.0" y1="106.0" x2="728.0" y2="106.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<circle cx="750" cy="106" r="20" class="box" fill="#efe3f5"/>
+<text x="750.0" y="113.0" font-size="22" class="ink" fill="#1a1a1a" text-anchor="middle">+</text>
+<line x1="770.0" y1="106.0" x2="810.0" y2="106.0" stroke="#8a8a8a" stroke-width="2" marker-end="url(#g)"/>
+<text x="850.0" y="112.0" font-size="18" class="ink" fill="#1a1a1a" text-anchor="middle" font-family="Roboto Mono, Consolas, monospace">out</text>
+<path d="M60,106 L60,40 L398,40 L398,84" fill="none" stroke="#a152c2" stroke-width="2.5" marker-end="url(#a)"/>
+<path d="M432,106 L432,40 L750,40 L750,84" fill="none" stroke="#a152c2" stroke-width="2.5" marker-end="url(#a)"/>
+<text x="229.0" y="32.0" font-size="14" fill="#a152c2" text-anchor="middle">copy of x, added back</text>
+<text x="591.0" y="32.0" font-size="14" fill="#a152c2" text-anchor="middle">copy, added back</text>
+<text x="440.0" y="170.0" font-size="15" fill="#8a8a8a" text-anchor="middle">each part adds to the vector instead of replacing it</text>
+</svg>

@@ -1,0 +1,2 @@
+staff_model/*.safetensors filter=lfs diff=lfs merge=lfs -text
+staff_model/*.joblib filter=lfs diff=lfs merge=lfs -text
